@@ -11,3 +11,5 @@ primaryColor = "#4CAF50"
 backgroundColor = "#0E1117"
 secondaryBackgroundColor = "#262730"
 textColor = "#FAFAFA"
+HF_TOKEN = "your_huggingface_api_token_here"
+
