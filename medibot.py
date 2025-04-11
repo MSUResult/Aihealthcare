@@ -3,21 +3,17 @@ import platform
 import asyncio
 import streamlit as st
 
-# ✅ Fix Windows asyncio event loop policy
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-# ✅ Disable CUDA for CPU-only compatibility
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
-# ✅ Langchain imports
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain_core.prompts import PromptTemplate
 from langchain_huggingface import HuggingFaceEndpoint
 
-# ✅ Vectorstore path
 DB_FAISS_PATH = "vectorstore/db_faiss"
 
 @st.cache_resource
@@ -25,7 +21,6 @@ def get_vectorstore():
     try:
         if not os.path.isdir(DB_FAISS_PATH):
             raise FileNotFoundError(f"Vectorstore path '{DB_FAISS_PATH}' does not exist.")
-
         embedding_model = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
         db = FAISS.load_local(DB_FAISS_PATH, embedding_model, allow_dangerous_deserialization=True)
         return db
@@ -43,6 +38,7 @@ def load_llm(huggingface_repo_id, HF_TOKEN):
 
     return HuggingFaceEndpoint(
         repo_id=huggingface_repo_id,
+        task="text-generation",  # ✅ Required fix!
         temperature=0.5,
         max_length=512,
         huggingfacehub_api_token=HF_TOKEN

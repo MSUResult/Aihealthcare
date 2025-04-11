@@ -6,14 +6,12 @@ name = "pypi"
 [packages]
 streamlit = "*"
 langchain = "*"
-langchain-community = "*"
 langchain-huggingface = "*"
+langchain-community = "*"
 faiss-cpu = "*"
 pypdf = "*"
 huggingface-hub = "*"
-torch = "*"
-
-[dev-packages]
+torch = ">=2.0"
 
 [requires]
 python_version = "3.10"
