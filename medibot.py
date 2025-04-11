@@ -38,14 +38,23 @@ def load_llm(huggingface_repo_id, HF_TOKEN):
 
     return HuggingFaceEndpoint(
         repo_id=huggingface_repo_id,
-        task="text-generation",  # ✅ Required fix!
+        task="text-generation",
         temperature=0.5,
         max_length=512,
         huggingfacehub_api_token=HF_TOKEN
     )
 
 def main():
-    st.title("🧠 Ask Chatbot (MediBot)")
+    # Styled Title Section
+    st.markdown("""
+        <div style='text-align: center; padding: 20px 0;'>
+            <h1 style='font-size: 40px; color: #4CAF50;'>
+                🧠 <span style="color: #2196F3;">MediBot AI</span>
+            </h1>
+            <h3 style='color: #777;'>Ask Chatbot powered by LangChain + HuggingFace</h3>
+            <p style='font-size: 18px;'>Created by <b style="color:#FF5722;">Shivansh</b> to showcase <span style="color:#9C27B0;">AI Skills</span> 🤖</p>
+        </div>
+    """, unsafe_allow_html=True)
 
     if 'messages' not in st.session_state:
         st.session_state.messages = []
