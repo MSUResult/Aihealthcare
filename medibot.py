@@ -49,9 +49,9 @@ def main():
     st.markdown("""
         <div style='text-align: center; padding: 20px 0;'>
             <h1 style='font-size: 40px; color: #4CAF50;'>
-                🧠 <span style="color: #2196F3;">MediBot AI</span>
+                🔬 <span style="color: #2196F3;">DoctorBot</span>
             </h1>
-            <h3 style='color: #777;'>Ask Chatbot powered by LangChain + HuggingFace</h3>
+            <h3 style='color: #777;'>Your Doctors Smart Assistant</h3>
             <p style='font-size: 18px;'>Created by <b style="color:#FF5722;">Shivansh</b> to showcase <span style="color:#9C27B0;">AI Skills</span> 🤖</p>
         </div>
     """, unsafe_allow_html=True)
