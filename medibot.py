@@ -1,18 +1,20 @@
 import os
 import streamlit as st
 
-# ✅ Disable CUDA to avoid `libcublas.so` error
+# ✅ Disable CUDA to avoid `libcublas.so` error (CPU only)
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.chains import RetrievalQA
+# ✅ Correct import for embeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
+from langchain.chains import RetrievalQA
 from langchain_core.prompts import PromptTemplate
 from langchain_huggingface import HuggingFaceEndpoint
 
-# DB Path
+# ✅ Path to your FAISS vectorstore
 DB_FAISS_PATH = "vectorstore/db_faiss"
 
+# ✅ Cache the loaded vectorstore
 @st.cache_resource
 def get_vectorstore():
     try:
@@ -23,9 +25,11 @@ def get_vectorstore():
         st.error(f"Failed to load vectorstore: {e}")
         return None
 
+# ✅ Custom prompt for better control over LLM responses
 def set_custom_prompt(custom_prompt_template):
     return PromptTemplate(template=custom_prompt_template, input_variables=["context", "question"])
 
+# ✅ Load HuggingFace model from endpoint
 def load_llm(huggingface_repo_id, HF_TOKEN):
     if not HF_TOKEN:
         st.error("❌ Hugging Face Token (HF_TOKEN) not set in environment.")
@@ -40,9 +44,11 @@ def load_llm(huggingface_repo_id, HF_TOKEN):
         }
     )
 
+# ✅ Main Streamlit app
 def main():
     st.title("🧠 Ask Chatbot (MediBot)")
 
+    # ✅ Session state for chat history
     if 'messages' not in st.session_state:
         st.session_state.messages = []
 
@@ -55,6 +61,7 @@ def main():
         st.chat_message('user').markdown(prompt)
         st.session_state.messages.append({'role': 'user', 'content': prompt})
 
+        # ✅ Custom Prompt Template
         CUSTOM_PROMPT_TEMPLATE = """
         Use the pieces of information provided in the context to answer user's question.
         If you don't know the answer, just say that you don't know. Don't try to make up an answer.
@@ -66,6 +73,7 @@ def main():
         Start the answer directly. No small talk please.
         """
 
+        # ✅ HuggingFace repo and token
         HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
         HF_TOKEN = os.environ.get("HF_TOKEN")
 
@@ -74,6 +82,7 @@ def main():
             if vectorstore is None:
                 return
 
+            # ✅ QA Chain setup
             qa_chain = RetrievalQA.from_chain_type(
                 llm=load_llm(HUGGINGFACE_REPO_ID, HF_TOKEN),
                 chain_type="stuff",
@@ -93,5 +102,6 @@ def main():
         except Exception as e:
             st.error(f"🚨 Error occurred: {str(e)}")
 
+# ✅ Run the app
 if __name__ == "__main__":
     main()
