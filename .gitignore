@@ -1,0 +1,38 @@
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ignore virtual environment folders
+.env/
+.venv/
+venv/
+ENV/
+env/
+
+# Ignore Pipenv environment files
+Pipfile.lock
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore FAISS vectorstore
+vectorstore/
+*.faiss
+
+# Ignore Streamlit secrets
+.secrets.toml
+
+# Ignore Jupyter notebooks (optional)
+*.ipynb
+
+# Ignore temporary files and logs
+*.log
+*.tmp
+
+# VSCode
+.vscode/
+
+# Ignore environment variables
+.env
