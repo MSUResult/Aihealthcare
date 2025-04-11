@@ -15,4 +15,6 @@ huggingface-hub = "*"
 [dev-packages]
 
 [requires]
-python_version = "3.12"
+[requires]
+python_version = "3.10"
+
