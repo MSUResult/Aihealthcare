@@ -36,3 +36,12 @@ vectorstore/
 
 # Ignore environment variables
 .env
+
+
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+pipfile.lock
